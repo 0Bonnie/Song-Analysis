@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Quotes</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+    </head>
+
+    <body>
+        {% extends "navbar.html" %}
+        {% block content %}
+
+        <form action="/crawl" method="GET">
+
+            <button type="submit">
+                更新資料
+            </button>
+        
+        </form>
+
+        <h1>Quotes</h1>
+
+        {% for quote in quotes %}
+
+            <div>
+
+                <p>
+                    {{ quote.text }}
+                </p>
+
+                <p>
+                    - {{ quote.author }}
+                </p>
+
+            </div>
+
+            <hr>
+
+        {% endfor %}
+        {% endblock %}
+    </body>
+</html>
