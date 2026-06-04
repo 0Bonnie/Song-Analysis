@@ -186,5 +186,49 @@ def crawl_quotes():
 
     return "Crawl Success!"
 
+@app.route("/quantamagazine/mathematics/popular")
+def quantamagazine_math_popular():
+    url = "https://www.quantamagazine.org/mathematics/"
+
+    options = Options()
+    options.add_argument("--headless=new")
+    options.add_argument("--disable-gpu")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+
+    driver = webdriver.Chrome(options=options)
+
+    try:
+        driver.get(url)
+
+        html = driver.page_source
+        soup = BeautifulSoup(html, "html.parser")
+
+        popular_section = None
+
+        for section in soup.select("div.popular"):
+            title = section.select_one(".popular__title")
+            if title and "Most Read in Mathematics" in title.get_text(strip=True):
+                popular_section = section
+                break
+
+        articles = []
+
+        if popular_section:
+            for a_tag in popular_section.select("a.card-list__title"):
+                title_tag = a_tag.select_one("h4")
+                title = title_tag.get_text(strip=True) if title_tag else a_tag.get_text(strip=True)
+                link = a_tag.get("href")
+
+                articles.append({
+                    "title": title,
+                    "link": link
+                })
+
+        return render_template("popular.html", articles=articles)
+
+    finally:
+        driver.quit()
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
