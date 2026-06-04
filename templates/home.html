@@ -1,17 +1,69 @@
 <!DOCTYPE html>
-    <html lang="zh-Hant">
-        <head>
-            <meta charset="UTF-8" />
-            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-            <title>Flask MVP</title>
-            <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
-        </head>
-        <body>
-            {% extends "navbar.html" %}
-            {% block content %}
-            <h1>Flask MVP Website</h1>
-            <p>這是一個最小可行版本的 Flask 網站。</p>
-            <h1>Hello, {{ name }}</h1>
-            {% endblock %}
-        </body>
-    </html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <title>林小兔的個人網站</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+</head>
+<body>
+    {% extends "navbar.html" %}
+    {% block content %}
+    <header>
+        <h1>林小兔的個人網站</h1>
+
+        <p>
+            "Success is the sum of small efforts, repeated day in and day out."
+            —— 羅伯特·科利爾 (Robert Collier)
+        </p>
+    </header>
+    
+    <main>
+        <section>
+            <h2>歡迎來到我的個人網站</h2>
+            <p>
+                這裡將分享我的學習歷程、興趣以及我所關注的數學相關內容。
+            </p>
+        </section>
+
+        <section>
+            <h2>網站功能介紹</h2>
+
+            <article>
+                <h3>動態爬蟲</h3>
+                <p>
+                    本網站目前可以使用動態爬蟲擷取 Quanta Magazine 數學頁面中，
+                    這週最多人閱讀的數學文章，並將文章標題與連結整理後展示出來。
+                </p>
+            </article>
+
+            <article>
+                <h3>靜態爬蟲</h3>
+                <p>
+                    除了動態爬蟲外，網站也可以透過靜態爬蟲取得網頁資料，
+                    適合處理不需要 JavaScript 動態載入的頁面內容。
+                </p>
+            </article>
+
+            <article>
+                <h3>簡單待做事項</h3>
+                <p>
+                    網站也提供簡單的待做事項功能，可以新增、查看與管理日常任務，
+                    作為紀錄學習進度與生活安排的小工具。
+                </p>
+            </article>
+        </section>
+
+        <section id="contact">
+            <h2>聯絡連結</h2>
+            <ul>
+                <li><a href="#">https://github.com/0Bonnie</a></li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 林小兔. All rights reserved.</p>
+    </footer>
+    {% endblock %}
+</body>
+</html>
