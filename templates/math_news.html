@@ -2,11 +2,18 @@
 <html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
-    <title>Quanta Magazine Most Read</title>
+    <title>數學新聞</title>
     <link rel="icon" href="/static/rabbit.png" type="image/png">
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
 </head>
 <body>
-    <h1>Most Read in Mathematics</h1>
+    {% extends "navbar.html" %}
+    {% block content %}
+    <h1>數學新聞</h1>
+
+    <form action="{{ url_for('crawl_math_news') }}" method="POST">
+        <button type="submit">🐰 爬取最新數學新聞</button>
+    </form>
 
     {% if articles %}
         <ul>
@@ -21,5 +28,6 @@
     {% else %}
         <p>沒有抓到資料。</p>
     {% endif %}
+    {% endblock %}
 </body>
 </html>

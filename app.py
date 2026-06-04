@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, url_for
 
 import os
 import requests
@@ -46,6 +46,11 @@ class Quote(db.Model):
         db.String(100),
         nullable=False
     )
+
+class MathNews(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(255), nullable=False)
+    link = db.Column(db.String(500), nullable=False, unique=True)
 
 with app.app_context():
     db.create_all()
@@ -186,8 +191,8 @@ def crawl_quotes():
 
     return "Crawl Success!"
 
-@app.route("/quantamagazine/mathematics/popular")
-def quantamagazine_math_popular():
+@app.route("/math-news/crawl", methods=["POST"])
+def crawl_math_news():
     url = "https://www.quantamagazine.org/mathematics/"
 
     options = Options()
@@ -208,27 +213,39 @@ def quantamagazine_math_popular():
 
         for section in soup.select("div.popular"):
             title = section.select_one(".popular__title")
+
             if title and "Most Read in Mathematics" in title.get_text(strip=True):
                 popular_section = section
                 break
 
-        articles = []
-
         if popular_section:
             for a_tag in popular_section.select("a.card-list__title"):
                 title_tag = a_tag.select_one("h4")
-                title = title_tag.get_text(strip=True) if title_tag else a_tag.get_text(strip=True)
-                link = a_tag.get("href")
 
-                articles.append({
-                    "title": title,
-                    "link": link
-                })
+                news_title = title_tag.get_text(strip=True) if title_tag else a_tag.get_text(strip=True)
+                news_link = a_tag.get("href")
 
-        return render_template("popular.html", articles=articles)
+                if news_title and news_link:
+                    exists_article = MathNews.query.filter_by(link=news_link).first()
+
+                    if not exists_article:
+                        news = MathNews(
+                            title=news_title,
+                            link=news_link
+                        )
+                        db.session.add(news)
+
+            db.session.commit()
 
     finally:
         driver.quit()
+
+    return redirect(url_for("math_news"))
+
+@app.route("/math-news")
+def math_news():
+    articles = MathNews.query.order_by(MathNews.id.desc()).all()
+    return render_template("math_news.html", articles=articles)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)

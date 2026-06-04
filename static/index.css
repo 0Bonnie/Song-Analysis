@@ -150,3 +150,62 @@ footer {
         padding: 22px;
     }
 }
+
+/* Form */
+form {
+    margin: 24px 0;
+    padding: 20px;
+    background: #fff7fb;
+    border: 2px solid #ffd6e8;
+    border-radius: 20px;
+    text-align: center;
+}
+
+form::before {
+    display: block;
+    margin-bottom: 12px;
+    color: #d86c9b;
+    font-weight: bold;
+}
+
+/* Button */
+form button {
+    padding: 12px 24px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #ffffff;
+    background: linear-gradient(
+        135deg,
+        #ff9fc5,
+        #ffb6d5
+    );
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(216, 108, 155, 0.25);
+}
+
+/* Hover */
+form button:hover {
+    transform: translateY(-3px);
+    background: linear-gradient(
+        135deg,
+        #ff8ab9,
+        #ffa7cc
+    );
+    box-shadow: 0 8px 18px rgba(216, 108, 155, 0.35);
+}
+
+/* Click */
+form button:active {
+    transform: scale(0.97);
+}
+
+/* Focus */
+form button:focus {
+    outline: none;
+    box-shadow:
+        0 0 0 4px rgba(255, 193, 220, 0.5),
+        0 4px 12px rgba(216, 108, 155, 0.25);
+}

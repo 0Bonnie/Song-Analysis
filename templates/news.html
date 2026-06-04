@@ -12,11 +12,13 @@
         <h1>Hacker News</h1>
         <ul>
             {% for news in news_list %}
-                <li>
-                    <a href="{{ news.url }}" target="_blank">
-                        {{ news.title }}
-                    </a>
-                </li>
+                <section>
+                    <li>
+                        <a href="{{ news.url }}" target="_blank">
+                            {{ news.title }}
+                        </a>
+                    </li>
+                </section>
             {% endfor %}
         </ul>
         {% endblock %}

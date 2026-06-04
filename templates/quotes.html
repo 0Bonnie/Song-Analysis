@@ -5,37 +5,27 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
         <link rel="icon" href="/static/rabbit.png" type="image/png">
     </head>
-
     <body>
         {% extends "navbar.html" %}
         {% block content %}
-
-        <form action="/crawl" method="GET">
-
-            <button type="submit">
-                更新資料
-            </button>
-        
-        </form>
-
         <h1>Quotes</h1>
-
+        <form action="/crawl" method="GET">
+            <button type="submit">
+                🐰 更新資料
+            </button>
+        </form>
         {% for quote in quotes %}
-
-            <div>
-
-                <p>
-                    {{ quote.text }}
-                </p>
-
-                <p>
-                    - {{ quote.author }}
-                </p>
-
-            </div>
-
+            <section>
+                <div>
+                    <p>
+                        {{ quote.text }}
+                    </p>
+                    <p>
+                        - {{ quote.author }}
+                    </p>
+                </div>
+            </section>
             <hr>
-
         {% endfor %}
         {% endblock %}
     </body>
